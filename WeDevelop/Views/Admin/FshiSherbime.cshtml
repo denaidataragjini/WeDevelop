@@ -1,0 +1,31 @@
+﻿@model WeDevelop.Models.Sherbime
+
+@{
+    ViewBag.Title = "FshiSherbime";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="margin-left: 54px;margin-top: 30px;font-size: 26px;">@ViewBag.Message  Deshironi ta fshini kete sherbim?</h2>
+<div class="container" style="margin-left:140px;">
+    <div class="col-md-3">
+        <p style="font-size: 20px;">@Model.Emri</p>
+        <p style="font-size: 20px;">@Model.Cmimi</p>
+        </div>
+        <div class="col-md-6" style="margin-left:1px;">
+            <img src="~/Content/Sherbimet/@Model.Imazh" />
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+            <div>
+                <input type="submit" value="Fshi" class="btn btn-danger" style=" margin-top: 23px;" />
+
+                @Html.ActionLink("Kthehu", "Sherbime", "Home", new { @class = "btm btn-info" })
+            </div>
+               
+            }
+            
+
+        </div>
+    </div>
+

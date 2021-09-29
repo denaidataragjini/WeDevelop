@@ -1,0 +1,71 @@
+﻿@using WeDevelop.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayotRegister.cshtml";
+}
+<h2>@ViewBag.Title.</h2>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="register" style=" background-image: url('../Content/images/vr2.jpg');">
+    
+        
+    
+        <section id="loginForm">
+
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="page-container">
+
+
+                    <div class="form">
+                        <h1 class="hh1">Log In</h1>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "Input Email", placeholder = "Email" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                        </div>
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "Input Address", placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                        </div>
+                        <div>
+                            <div style="margin-top:15px;" class="col-md-10">
+                                <div>
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { @style = "width:20px; margin-right:0px !important;" })
+                                    @Html.LabelFor(m => m.RememberMe, new { @style = "color:white !important; font-size:14px;" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <br /> <br />
+                            <div class="g-recaptcha" data-sitekey="6Lc9_r8aAAAAAAObKn3K5NL8GvEL7YymtbFl3yuF"></div>
+                            @Html.ValidationMessage("Captcha", htmlAttributes: new { @style = "color:white !important;font-weight:bold !important; font-size:14px;" })
+                        </div>
+
+                        <button type="submit" value="Add" name="submit" style=" margin-left: 15px;width: 128px;font-size: 21px;">Log in</button>
+                        <div style="margin-top: -85px;font-size: 13px;background-color: #0e0556;color: white;margin-left: 14px;height: 39px;"> Nese nuk keni nje llogari ju mund te <a href="@Url.Action("Register", "Account")">Regjistrohuni </a> Ose mund te autentfikoheni nepermjet:  </div>
+                    </div>
+
+
+                </div>
+
+
+            }
+                <div style="margin-left:540px">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </div>
+        </section>
+    <hr />
+    <br />
+   
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

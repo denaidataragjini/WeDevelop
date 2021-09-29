@@ -1,0 +1,54 @@
+﻿@model WeDevelop.Models.ExternalLoginConfirmationViewModel
+@{
+              
+
+                ViewBag.Title = "Register";
+                Layout = "~/Views/Shared/_LayotRegister.cshtml";
+}
+<div class="register" style="background-image: url('../../Content/images/Pattern_image-8c050053eab884e51b8599607865d112.jpg');">
+
+   
+
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="page-container">
+        <h1 class="hh1">Rregjistrohu me llogarine e @ViewBag.LoginProvider.</h1>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-10">
+            <p style="text-align:center !important;font-size: 26px; font-weight: 400; padding-top: 12px; margin-left:218px;" class="text-info">
+                Ju u autentifikuat me sukses me <strong>@ViewBag.LoginProvider</strong>.
+                Ju lutem vendosni Username me poshte dhe klikoni butonin Submit per tu rregjistruar me sukses
+            </p>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <div class="col-md-10" style="text-align:center !important; margin-left: 300px; font-size:25px; margin-top:110px !important">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @style = "font-size:12px !important; height:55px !important" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="margin-left:482px !important">
+                <button type="submit" value="Add"  style="height:50px !important; margin-top:50px !important" name="submit">Submit</button>
+            </div>
+        </div>
+    </div>  
+    }
+       
+ </div>
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

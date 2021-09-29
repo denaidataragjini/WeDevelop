@@ -1,0 +1,35 @@
+﻿@model WeDevelop.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0) {
+        <div>
+           <p> Nuk ka identifikim te jashtem </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+               
+                <div class="col-md-10">
+
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        if (p.AuthenticationType == "Facebook")
+                        {
+                            <button type="submit" style="height:43px; color: white;  width: 126px;margin-right: 80px;font-size: 17px; background-color: #4267B2; font-weight: 800; border-radius: 50px;" class="btn btn-primary" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                   >  @p.AuthenticationType</button>
+                        }
+                        else
+                        {
+                        <button type="submit" style="height:43px; color: white;    width: 126px;     margin-right: 9px;font-size: 17px;background-color: #EA4335; font-weight: 800; border-radius: 50px;" class="btn btn-primary" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Identifikohu duke perdorur acountin e  @p.Caption ">  @p.AuthenticationType</button>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
+}

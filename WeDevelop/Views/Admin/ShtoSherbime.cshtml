@@ -1,0 +1,109 @@
+﻿@model WeDevelop.Models.Sherbime
+
+@{
+    /**/
+
+    ViewBag.Title = "ShtoSherbime";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:18px; background-color: beige;margin-bottom: 41px;"> <h2 style="font-family: inherit;margin-left: 521px;font-size: 33px;"> Shto Sherbim te Ri </h2> </div>
+@using (Html.BeginForm("ShtoSherbime", "Admin", FormMethod.Post, new
+{
+    enctype = "multipart/form-data"
+
+}))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+       
+            <h2 style="font-size: 27px;margin-bottom: 18px;font-weight: 700;">Detajet kryesore:</h2>
+            <table class="table table-info">
+                <tr>
+                    <td style="width: 13%;font-size: 15px;"> <label> Emri i Sherbimit:</label></td>
+                    <td>
+                        @Html.EditorFor(model => model.Emri, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </td>
+                    <td style="width: 13%;font-size: 15px;"><label> Cmimi:</label></td>
+                    <td>
+                        @Html.EditorFor(model => model.Cmimi, new { htmlAttributes = new { @class = "form-control" } })
+                       
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 13%;font-size: 15px;"><label> Pershkrim i shkurter:</label></td>
+                    <td colspan="3" style=" height: 87px;">
+                        @Html.EditorFor(model => model.Pershkrimi, new { htmlAttributes = new { @class = "form-control", @style= "width: 324px; height: 65px; " } })
+
+                    </td>
+                </tr>
+            </table>
+    
+            <div class="details">
+                <h2 style="font-size: 27px;margin-bottom: 18px;font-weight: 700;">Detajet ekstra:</h2>
+                <table class="table table-info">
+                    <tr>
+                        <td style="width: 13%;font-size: 15px;"><label> Imazh:</label></td>
+                        <td style="width: 13%;font-size: 15px;"><label> Kohezgjatja:</label></td>
+                        <td style="width: 13%;font-size: 15px;"><label> Cfare kerkojme:</label></td>
+                        <td style="width: 13%;font-size: 15px;"><label> Cfare japim:</label></td>
+                        <td style="width: 13%;font-size: 15px;"><label> Kategoria:</label></td>
+                    </tr>
+                    <tr class="mycontainer" id="mainrow">
+                        <td style=" height: 90px;">
+                            <input type="file" name="file" id="file" class="form-control" style="height: 53px;font-size: 15px;" />
+                            <span class="error">  @Html.ValidationMessageFor(model => model.Imazh, "")</span>
+                        </td>
+                        <td style=" height: 90px;">
+                            @Html.EditorFor(model => model.Ditet, new { htmlAttributes = new { @class = "form-control", @style = "height: 53px;font-size: 15px;" } })
+
+                        </td>
+                        <td style=" height: 90px;">
+                            @Html.EditorFor(model => model.CfareKerkojme, new { htmlAttributes = new { @class = "form-control", @style = "height: 53px;font-size: 15px;" } })
+                 
+                        </td>
+                        <td style=" height: 90px;">
+                            @Html.EditorFor(model => model.CfareJapim, new { htmlAttributes = new { @class = "form-control", @style = "height: 53px;font-size: 15px;" } })
+                      
+                        </td>
+                        <td style=" height: 90px;">
+                            @Html.DropDownList("KategoriId", null, new { @class = "form-control", @style = "height: 53px;font-size: 15px;" })
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div >
+                        <input type="submit" value="Krijo Sherbimin" class="btn btn-success" style="font-size: 20px;width: 197px; margin-top: 24px;margin-left: 435px;" />
+                    </div>
+                </div>
+               
+
+            </div>
+    </div>
+
+}
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { @class="btn btn-primary", @style= "font-size: 19px;" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

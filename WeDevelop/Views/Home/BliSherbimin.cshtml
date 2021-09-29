@@ -1,0 +1,65 @@
+﻿@model WeDevelop.Models.Kerkesat
+
+@{
+    ViewBag.Title = "BliSherbimin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("BliSherbimin", "Home", FormMethod.Post, new
+{
+    enctype = "multipart/form-data"
+
+}))
+{
+ @Html.AntiForgeryToken()
+
+<div class="container">
+    <div class="row" style=" margin-top: 50px;
+    margin-left: 149px;
+    margin-bottom: 57px;">
+        <h3 style="font-size: 26px;
+    font-weight: 700;">
+            Per te blere sherbimin ju lutem plotesoni te dhenat qe kerkohen!
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div style="font-size: 24px;">
+                @Html.LabelFor(model => model.Sherbimet.Emri, new { htmlAttributes = new { @class = "control-label" } }):
+                <span>@ViewBag.EmriSherbimit</span>
+            </div>
+            <div style="font-size: 24px;">
+                @Html.LabelFor(model => model.Sherbimet.Cmimi, new { htmlAttributes = new { @class = "control-label" } }):
+                <span> @ViewBag.Cmimi </span>
+            </div>
+            <div style="font-size: 24px;">
+                @Html.LabelFor(model => model.User.UserName, new { htmlAttributes = new { @class = "control-label" } }):
+                <span> @ViewBag.Username</span>
+            </div>
+
+            <div style="font-size: 24px;">
+                @Html.LabelFor(model => model.Pershkrimi, new { htmlAttributes = new { @class = "control-label" } }):
+                <span> @Html.EditorFor(model => model.Pershkrimi, new { htmlAttributes = new { @class = "form-control" } }) </span>
+            </div>
+            <div style="font-size: 24px;">
+                @Html.LabelFor(model => model.Dokumenti, new { htmlAttributes = new { @class = "control-label" } }):
+               
+                @Html.TextBox("file", "", new { type = "file" })
+                @ViewBag.Message
+            </div>
+            <br />
+
+        </div>
+        <div class="col-md-6">
+            <img src="~/Content/Sherbimet/@ViewBag.Imazhi" style="width:90%; " />
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Dergo Kerkesen" class="btn btn-success" style="font-size: 25px;margin-left: 94px;" />
+    </div>
+    
+</div>
+    }
+
+

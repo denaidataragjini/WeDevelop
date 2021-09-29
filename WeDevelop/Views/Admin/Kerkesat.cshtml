@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Kerkesat";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<WeDevelop.Models.Kerkesat>
+<div class="main-container">
+    <div class="pd-ltr-20">
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row">
+                <div class="container" style="margin-bottom:50px;">
+                    <h4 style="margin-left:400px; margin-right:400px;">Kerkesa te reja</h4>
+                </div>
+                <div class="container">
+                    <div class="row" style="margin-bottom:50px;">
+                        <div class="col-md-1">
+                            <label>Klienti: </label>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.DropDownList("Users", null, new { @class = "form-control", id = "user" })
+                        </div>
+                        <div class="col-md-1">
+                            <label>Kategoria: </label>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.DropDownList("Kategorite", null, new { @class = "form-control", id = "kategori" })
+                        </div>
+                    </div>
+                </div>
+                <label class="text-danger" id="msg"></label>
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Sherbimi</th>
+                        <th>Klienti</th>
+                        <th>Kohezgjatja</th>
+                        <th>Cmimi</th>
+                        <th></th>
+
+                    </tr>
+                    <tbody id="bodyTab">
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var kerkese in Model)
+                            {
+                                <tr id="kerkese@(kerkese.Id)">
+                                    <td>@kerkese.Sherbimet.Emri</td>
+                                    <td>@kerkese.User.UserName</td>
+                                    <td>@kerkese.Sherbimet.Ditet</td>
+                                    <td>@Convert.ToInt32(kerkese.Sherbimet.Cmimi) All</td>
+                                    <td><button class="btn btn-success" onclick="Konfirmo(@kerkese.Id)">Konfirmo</button></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align:center">S'ka asnje kerkese</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#user").change(function () {
+                var vlera = $(this).val();
+
+                var query = "?userId=" + vlera;
+                $.ajax({
+                    url: "/Admin/KerkoKerkese" + query,
+                    method: "GET",
+                    success: function (data) {
+                        if (data != null && data.length > 0) {
+                            $("#bodyTab").empty();
+                            $("#msg").empty();
+                            for (var i = 0; i < data.length; i++) {
+                                $("#bodyTab").append("<tr id='kerkese" + data[i].Id+"'><td>" + data[i].Sherbimet.Emri + "</td><td>"
+                                    + data[i].User.UserName
+                                    + "</td><td>" + data[i].Sherbimet.Ditet
+                                    + "</td><td>" + data[i].Sherbimet.Cmimi
+                                    + "</td><td> <button onclick='Konfirmo("+data[i].Id+")' class='btn btn-success btnKonfirmo' id='"+ data[i].Id+"'>Konfirmo</button></td></tr>");
+                            }
+                        }
+                        else {
+                            $("#bodyTab").empty();
+                            $("#bodyTab").append("<tr><td colspan=5 style='text-align: center'>Nuk ka kerkesa per kete klient</td></tr>");
+                        }
+
+
+                    }
+                 });
+            });
+            $("#kategori").change(function () {
+                var vlera = $(this).val();
+                var query = "?kategoriId=" + vlera;
+                $.ajax({
+                    url: "/Admin/KerkoKerkeseKategori" + query,
+                    method: "GET",
+                    success: function (data) {
+                        if (data != null && data.length > 0) {
+                            $("#bodyTab").empty();
+                            $("#msg").empty();
+                            for (var i = 0; i < data.length; i++) {
+                                $("#bodyTab").append("<tr id='kerkese" + data[i].Id + "'><td>" + data[i].Sherbimet.Emri + "</td><td>"
+                                    + data[i].User.UserName
+                                    + "</td><td>" + data[i].Sherbimet.Ditet
+                                    + "</td><td>" + data[i].Sherbimet.Cmimi
+                                    + "</td><td> <button onclick='Konfirmo(" + data[i].Id + ")' class='btn btn-success btnKonfirmo' id='" + data[i].Id + "'>Konfirmo</button></td></tr>");
+                            }
+                        }
+                        else {
+                            $("#bodyTab").empty();
+                            $("#bodyTab").append("<tr><td colspan=5 style='text-align: center'>Nuk ka kerkesa  per kete kategori</td></tr>");
+                        }
+
+
+                    }
+                });
+            });
+        });
+        function Konfirmo(id) {
+            $.ajax({
+                url: "/Admin/KonfirmoKerkese/" + id,
+                method: "GET",
+                success: function (data) {
+                    if (data) {
+                        $("#msg").empty();
+                        $("#kerkese" + id).fadeOut();
+                    }
+                    else {
+                        $("#msg").text("Konfirmimi i kerkeses nuk u krye.");
+                    }
+                }
+            });
+        }
+    </script>
+}

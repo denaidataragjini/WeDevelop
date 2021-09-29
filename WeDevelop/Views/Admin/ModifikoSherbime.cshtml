@@ -1,0 +1,79 @@
+﻿@model WeDevelop.Models.Sherbime
+
+@{
+    ViewBag.Title = "ModifikoSherbime";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="margin-top:18px; background-color: beige;margin-bottom: 41px;"> <h2 style="font-family: inherit;margin-left: 521px;font-size: 33px;"> Modifiko sherbimin </h2> </div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+
+        <h2 style="font-size: 27px;margin-bottom: 18px;font-weight: 700;">Detajet kryesore:</h2>
+        <table class="table table-info">
+            <tr>
+                <td style="width: 13%;font-size: 15px;"> <label> Emri i Sherbimit:</label></td>
+                <td>
+                    @Html.TextBoxFor(m => m.Emri)
+
+                </td>
+                <td style="width: 13%;font-size: 15px;"><label> Cmimi:</label></td>
+                <td>
+                    @Html.TextBoxFor(m => m.Cmimi)
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 13%;font-size: 15px;"><label> Pershkrim i shkurter:</label></td>
+                <td colspan="3" style=" height: 87px;">
+                    @Html.TextAreaFor(m => m.Pershkrimi)
+
+                </td>
+            </tr>
+        </table>
+
+        <div class="details">
+            <h2 style="font-size: 27px;margin-bottom: 18px;font-weight: 700;">Detajet ekstra:</h2>
+            <table class="table table-info">
+                <tr>
+
+                    <td style="width: 13%;font-size: 15px;"><label> Kohezgjatja:</label></td>
+          
+                    <td style="width: 13%;font-size: 15px;"><label> Cfare kerkojme:</label></td>
+                    <td style="width: 13%;font-size: 15px;"><label> Cfare japim:</label></td>
+                 
+                </tr>
+                <tr class="mycontainer" id="mainrow">
+                
+                    <td style=" height: 90px;">
+                        @Html.TextBoxFor(m => m.Ditet)
+
+                    </td>
+                    <td style=" height: 90px;">
+
+                        @Html.TextBoxFor(m => m.CfareKerkojme)
+                    </td>
+                    <td  style=" height: 90px;">
+                        @Html.TextBoxFor(m => m.CfareJapim)
+                    </td>
+                   
+                </tr>
+            </table>
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Ruaj Ndryshimet" class="btn btn-success" style="font-size: 20px;width: 197px; margin-top: 24px;margin-left: 329px;" />
+                    @Html.ActionLink("Anulo", "Sherbime", "Home", null, htmlAttributes: new { @class = "btn btn-danger", @style = "margin-top: 24px;font-size: 20px;margin-left: 38px; width: 193px; " })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+}
+

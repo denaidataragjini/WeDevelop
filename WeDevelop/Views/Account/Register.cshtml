@@ -1,0 +1,59 @@
+﻿@model WeDevelop.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayotRegister.cshtml";
+}
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="register" style="background-color:#808080 !important">
+
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="page-container">
+
+            <div class="form">
+                <h1 class="hh1">Sign Up</h1>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.EmerPlote, new { @class = "Input Name", placeholder = "Emri i plote" })
+                    @Html.ValidationMessageFor(m => m.EmerPlote, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.NrTelefoni, new { @class = "Input Tele", placeholder = "Nr. cel" })
+                    @Html.ValidationMessageFor(m => m.NrTelefoni, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "Input Email", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                </div>
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "Input Address", placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                </div>
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "Input Address", placeholder = "Konfirmo password" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @style = "color:white !important; font-weight:bold !important; font-size:14px;" })
+                </div>
+                <div class="col-md-10">
+                    <br /> <br />
+                    <div class="g-recaptcha" data-sitekey="6Lc9_r8aAAAAAAObKn3K5NL8GvEL7YymtbFl3yuF"></div>
+                    @Html.ValidationMessage("Captcha", htmlAttributes: new { @style = "color:white !important;font-weight:bold !important; font-size:14px;" })
+                </div>
+                <button type="submit" value="Add" name="submit" style=" margin-left: 15px;width: 128px;font-size: 21px;">Regjistrohu</button>
+                <div style="margin-top: -85px;font-size: 14px;background-color: white;color: black;margin-left: 14px;height: 27px;"> Nese keni nje llogari ju mund te <a href="@Url.Action("Login", "Account")">Logoheni  </a>   </div>
+           <div style="height:20px;"></div>
+            </div>
+        </div>
+    }
+</div>
+
+@*popup*@
+@Html.Partial("_LoginPopup")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

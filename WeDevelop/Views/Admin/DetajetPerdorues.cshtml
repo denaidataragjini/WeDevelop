@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "DetajetPerdorues";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model  WeDevelop.Models.ApplicationUser
+<h2>DetajetPerdorues</h2>
+<div class="main-container">
+    <div class="pd-ltr-20">
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+
+                <div style="width:100%; text-align:center;" ><h5>@Model.UserName</h5> <hr /></div>
+
+                <div class="container">
+                    <div class="row">
+                        <p class="col-md-4" style="font-size:17px;">Email: <span>@Model.Email</span></p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-4" style="font-size:17px;">
+                            Nr. cel:
+                            @if (@Model.PhoneNumber == null)
+                            {
+                                <span> - </span>
+                            }
+                            else
+                            {<span>@Model.PhoneNumber</span>}
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-4" style="font-size:17px;"><span></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pd-ltr-20">
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-12">
+                            <center>
+                                    <table class="table table-hover" style="">
+                                        <tr class="table-dark">
+                                            <th colspan="3" style="text-align:center;">Kerkesat</th>
+                                        </tr>
+                                        <tr class="table-light">
+                                            <th>Sherbimi</th>
+                                            <th>Emri</th>
+                                            <th>Cmimi</th>
+                                        </tr>
+                                        <tbody>
+                                            @if (ViewBag.Kerkesat.Count == 0)
+                                            {
+                                                <tr>
+                                                    <td colspan="3" style="text-align:center;"><span class="text-danger"> S'ka kerkesa.</span></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                foreach (var item in ViewBag.Kerkesat)
+                                                {
+                                                    <tr class="table-light">
+                                                        <td style=""><img src="~/Content/Sherbimet/@(item.Sherbimet.Imazh)" width="100" height="100" /></td>
+                                                        <td style="">@item.Sherbimet.Emri</td>
+                                                        <td style="">@item.Sherbimet.Cmimi</td>
+                                                    </tr>
+                                                }
+                                            }
+                                         
+                                        </tbody>
+                                    </table>
+                                </center>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="pd-ltr-20">
+                <div class="card-box pd-20 height-100-p mb-30">
+                    <div class="row align-items-center">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table style="" class="table table-hover">
+                                       <tr>
+                                           <th class="table-dark" colspan="5" style="text-align:center;">Marreveshjet</th>
+                                       </tr>
+                                        <tr class="table-light">
+                                            <th>Sherbimi</th>
+                                            <th>Emri</th>
+                                            <th>Datefillimi</th>
+                                            <th>Progresi</th>
+                                            <th>Cmimi</th>
+                                        </tr>
+                                        <tbody>
+                                            @if (ViewBag.Marreveshjet == null)
+                                            {
+                                            <tr>
+                                                <td colspan="5" style="text-align:center"><span class="text-danger"> S'ka marreveshje.</span></td>
+                                            </tr>
+                                            }
+                                            else
+                                            {
+                                                foreach (var item in ViewBag.Kerkesat)
+                                                {
+                                                    <tr class="table-light">
+                                                        <td style="width:150px !important;"><img src="~/Content/Sherbimet/@(item.Sherbimet.Imazh)" width="100" height="100" /></td>
+                                                        <td style="width:100px !important;">@item.Sherbimet.Emri</td>
+                                                        <td style="width:100px !important;">@(item.DataEFillimit.Month.ToString() + "/" + item.DataEFillimit.Day.ToString() + "/" + item.DataEFillimit.Year.ToString())</td>
+                                                        <td style="width:100px !important;">@item.Progresi</td>
+                                                        <td style="width:100px !important;">@item.Sherbimet.Cmimi</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+@*<th>Datefillimi</th>
+                                            <th>Progresi</th>
+                                            <th>Cmimi</th>
+                                        </tr>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Kerkesat)
+                                            {
+                                                <tr>
+                                                    <td style="width:150px !important;"><img src="~/Content/Sherbimet/@(item.Sherbimet.Imazh)" width="100" height="100" /></td>
+                                                    <td style="width:100px !important;">@item.Sherbimet.Emri</td>
+                                                    <td style="width:100px !important;">@(item.DataEFillimit.Month.ToString() + "/" + item.DataEFillimit.Day.ToString() + "/" + item.DataEFillimit.Year.ToString())</td>
+                                                    <td style="width:100px !important;">@item.Progresi</td>
+                                                    <td style="width:100px !important;">@item.Sherbimet.Cmimi</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Sherbime";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<WeDevelop.Models.Sherbime>
+
+
+
+
+<div class="row" style="margin-top: 60px; height: 50px; margin-left: 40px; margin-bottom:20px;">
+
+    <input style="width: 300px; color: black; font-size: 13px;" id="emri" type="text"
+           placeholder="Emri i sherbimit" />
+
+    <button style="margin-left: 20px; width: 107px; font-size: 17px;" id="buton" class="btn btn-primary"><i class="fas fa-search"></i> &nbsp; Kerko</button>
+
+</div>
+
+<div class="row" style="margin-left: 285px;font-size: 27px;font-weight: 800;margin-bottom: 58px;margin-top: 50px;">Menyra me e shpejte per te mbaruar punen tuaj ne internet!</div>
+<div class="demo"> </div>
+<div class="row" id="row2">
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="col-md-3">
+            <a href="../Admin/ShtoSherbime">
+                <img src="~/Content/Sherbimet/add.jpeg" width="250" height="250" />
+            </a>
+            <p style="font-size: 23px;margin-left: 41px;">Shto nje sherbim</p>
+        </div>
+    }
+
+    @foreach (var item in Model)
+    {<div class="col-md-3">
+            <div class="card" style=" width:27rem;    margin-left: 12px; margin-bottom: 12px; ">
+                <div class="inner">
+                    <a href="@Url.Action("DetajeSherbimesh", "Home", new { id = item.Id })">
+                        <img src="~/Content/Sherbimet/@item.Imazh" width="200" height="200" class="card-img-top">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="color:black;font-size:21px;">@Convert.ToInt32(item.Cmimi) All&nbsp;&nbsp;•@item.Ditet dite </p>
+                    <h5 class="card-title" style="color:black;font-size:21px;">@item.Emri</h5>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<center>
+    <div class="paging" style="margin-top:25px;">
+        @Html.ActionLink("<<<", "Sherbime", new { nrFaqes = ViewBag.FaqjaAktuale - 1 }, htmlAttributes: new { style = "font-size: 20px;text - align: center;width: 49px;font - weight: 800;color: #00334d;" })
+        <label style="font-size: 15px; margin-left:10px; margin-right:10px;">@ViewBag.FaqjaAktuale</label>
+        @Html.ActionLink(">>>", "Sherbime", new { nrFaqes = ViewBag.FaqjaAktuale + 1 }, htmlAttributes: new { style = "font-size: 20px;text - align: center;width: 49px;font - weight: 800;color: #00334d;" })
+    </div>
+</center>
+
+
+<style>
+    .inner {
+        overflow: hidden;
+    }
+
+        .inner img {
+            transition: all 1.5s ease;
+        }
+
+        .inner:hover img {
+            transform: scale(1.5);
+        }
+</style>
+
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="~/Scripts/Sherbimet/kerko.js"></script>
+}

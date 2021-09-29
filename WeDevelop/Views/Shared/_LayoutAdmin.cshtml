@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Basic Page Info -->
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/vendors/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/vendors/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/vendors/images/favicon-16x16.png">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/src/plugins/datatables/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/styles/style.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119386393-1');
+    </script>
+</head>
+<body>
+
+
+  
+
+
+    <div class="header">
+        <div class="header-left"> </div>
+          
+
+        <div class="header-right">
+            <div class="dashboard-setting user-notification">
+                <div class="dropdown">
+                    <a class="dropdown-toggle no-arrow" href="@(Url.Action("Dashboard","Home"))" data-toggle="right-sidebar">
+                        <i class="dw dw-settings2"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            
+            <div class="user-notification">
+                <div class="dropdown">
+                    <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+                        <i class="icon-copy dw dw-notification"></i>
+                        @if (Session["seen"] != null)
+                        {
+                            <span class="badge notification-active"></span>
+                            <div class="dropdown-menu dropdown-menu-right" style="width:150px !important; height:150px !important;">
+
+                                <a href="@(Url.Action("Kerkesat","Admin"))">
+                                    <h3> @Session["seen"]</h3>
+                                    <p>Kerkesa te reja</p>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class=""></span>
+                        }
+
+                    </a>
+
+       
+                </div>
+            </div>
+
+
+
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                          
+                            <img src="~/Content/images/baku-removebg-preview.png" />
+                        </span>
+
+                        <span class="user-name">@User.Identity.Name</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                       
+                        <a class="dropdown-item" href="@(Url.Action("Index", "Home"))"><i class="dw dw-logout"></i> Log Out</a>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+
+
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li>
+                        <a href="@(Url.Action("IndexAdmin","Admin"))" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="@(Url.Action("Perdorues","Admin"))" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-user"></span><span class="mtext">Perdoruesit</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">
+                            <span class="micon dw dw-shopping-cart-1"></span><span class="mtext">Sherbimet</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="@Url.Action("Sherbime","Home")"> Sherbimet</a></li>
+                            <li><a href="@Url.Action("ShtoSherbime","Admin")"> Krijo Sherbim te ri</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="@(Url.Action("Marreveshjet","Admin"))" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-gallery"></span><span class="mtext">Marreveshjet</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Kerkesat","Admin")" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-ticket-1"></span><span class="mtext">Kerkesat</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+    <div>
+        @RenderBody()
+    </div>
+
+    <div class="footer-wrap pd-20 mb-20 card-box">
+        <h5>Copyright @DateTime.Now.Year! All rights reserved.</h5>
+        <h6>Design and Developed by WeDevelop<br></h6>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!-- js -->
+
+    <script src="~/Content/vendors/scripts/core.js"></script>
+   
+    <script src="~/Content/vendors/scripts/script.min.js"></script>
+    <script src="~/Content/vendors/scripts/process.js"></script>
+    <script src="~/Content/vendors/scripts/layout-settings.js"></script>
+    <script src="~/Content/src/plugins/apexcharts/apexcharts.min.js"></script>
+    <script src="~/Content/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/vendors/scripts/dashboard.js"></script>
+</body>
+</html>

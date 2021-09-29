@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Kerkesat";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model WeDevelop.ViewModels.MarreveshjetViewModel
+<div class="main-container">
+    <div class="pd-ltr-20">
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row">
+                <div class="container" style="margin-bottom:50px;">
+                    <h4 style="margin-left:300px; margin-right:300px;">Marreveshjet ne progres</h4>
+                </div>
+                <p id="msg" class="text-danger"></p>
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Sherbimi</th>
+                        <th>Klienti</th>
+                        <th>Kohezgjatja</th>
+                        <th>Data e fillimit</th>
+                        <th>Progresi</th>
+                        <th></th>
+
+                    </tr>
+                    <tbody id="bodyTab">
+                        @if (Model != null)
+                        {
+
+                            foreach (var kerkese in Model.MarreveshjeNeProcesim)
+                            {
+                                <tr id="rowProgres@(kerkese.Id)">
+                                    <td>@kerkese.Sherbimet.Emri</td>
+                                    <td>@kerkese.User.UserName</td>
+                                    <td>@kerkese.Sherbimet.Ditet dite</td>
+                                    <td>@(kerkese.DataEFillimit.Day.ToString() + "/" + kerkese.DataEFillimit.Month.ToString() + "/" + kerkese.DataEFillimit.Year.ToString())</td>
+                                    <td><input type="text" class="progres" id="prog@(kerkese.Id)" value=@kerkese.Progresi /></td>
+                                    <td><button class="btn btn-primary ruaj" disabled id="@kerkese.Id">Ruaj</button></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align:center">S'ka asnje kerkese</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr style="margin-top:45px; margin-bottom:45px;" />
+            <div class="row">
+                <div class="container" style="margin-bottom:50px;">
+                    <h4 style="margin-left:300px; margin-right:300px;">Marreveshjet e perfunduara</h4>
+                </div>
+
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>Sherbimi</th>
+                        <th>Klienti</th>
+                        <th>Data e fillimit</th>
+                        <th>Kohezgjatja</th>
+                        <th>Cmimi</th>
+                    </tr>
+                    <tbody id="bodyTab2">
+                        @if (Model != null && Model.MarreveshjeTePerfunduara.Count() > 0)
+                        {
+                            foreach (var kerkese in Model.MarreveshjeTePerfunduara)
+                            {
+                                <tr>
+                                    <td>@kerkese.Sherbimet.Emri</td>
+                                    <td>@kerkese.User.UserName</td>
+                                    <td>@kerkese.DataEFillimit</td>
+                                    <td>@((kerkese.DataEMbarimit - kerkese.DataEFillimit).Days) dite</td>
+                                    <td>@Convert.ToInt32(kerkese.Sherbimet.Cmimi) All</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align:center">S'ka akoma marreveshje te perfunduar</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <div style="margin-left:450px; margin-right:450px;">
+                    <a style="cursor: pointer;" id="previous" onclick="Faqezim(id)"><<<</a>
+                    <label id="faqjaAktuale">1</label>
+                    <a style="cursor: pointer;" id="next" onclick="Faqezim(id)">>>></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+        $(function () {
+            if ($("#faqjaAktuale").text() == "1") {
+                $("#previous").attr('disabled', 'disabled');
+            } else {
+                $("#previous").removeAttr('disabled');
+            }
+
+            $(".progres").click(function () {
+                var btnId ="#"+ $(this).attr('id').replace("prog", "");
+                $(btnId).removeAttr('disabled');
+                $(btnId).text("Ruaj");
+            });
+            $(".ruaj").click(function () {
+                var id = $(this).attr('id');
+                var progresi = $("#prog" + id).val();
+                if (progresi > 100 || progresi < 0) {
+                    $("#msg").text("Vlera e progresit s'eshte e rregullt!");
+                } else {
+                    $("#msg").text("");
+
+                    var query = "?id=" + id + "&progresi=" + progresi;
+
+                    $.ajax({
+                        url: "/Admin/NdryshoProgresMarreveshje" + query,
+                        method: "GET",
+                        success: function (data) {
+                            if (data) {
+                                var butonId = "#" + id;
+                                if (progresi == "100") {
+                                    window.location.reload();
+                                }
+                                $(butonId).text("U ruajt");
+                                $(butonId).attr('disabled', 'disabled');
+                                $("#msg").empty();
+                            }
+                            else {
+                                $("#msg").text("Ruajtja nuk u krye");
+                            }
+                        }
+                    });
+                }
+            });
+
+        });
+
+
+
+        function Faqezim(faqja) {
+            var faqjaAktual = $("#faqjaAktuale").text();
+            if (faqja == "previous" && faqjaAktual > 1) {
+                var query = "?faqja" + faqjaAktual - 1;
+            }
+            else {
+                var query = "?faqja" + faqjaAktual + 1;
+            }
+            $.ajax({
+                url: "/Admin/FaqezimTabele" + query,
+                method: "GET",
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#bodyTab2").empty();
+                        $("#msg").empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var diffDays = moment(data[i].DataEMbarimit).diff(moment(data[i].DataEFillimit), 'days');
+
+                            console.log(diffDays);
+                            $("#bodyTab2").append("<tr id='kerkese" + data[i].Id + "'><td>" + data[i].Sherbimet.Emri + "</td><td>"
+                                + data[i].User.UserName
+                                + "</td><td>" + moment(data[i].DataEFillimit).format("YYYY-MM-DD")
+                                + "</td><td>"
+                                + diffDays+" dite"
+                                + "</td><td>" + data[i].Sherbimet.Cmimi +"</td></tr>");
+                        }
+                    }
+                    else {
+                        $("#bodyTab").empty();
+                        $("#bodyTab").append("<tr><td colspan=5 style='text-align: center'>Nuk ka porosi per kete klient</td></tr>");
+                    }
+
+                }
+            });
+        }
+    </script>
+}

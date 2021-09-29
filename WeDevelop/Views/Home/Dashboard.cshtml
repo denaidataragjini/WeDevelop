@@ -1,0 +1,117 @@
+﻿
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<WeDevelop.Models.Kerkesat>
+
+<br />
+<br />
+<br />
+<br />
+<hr />
+
+<div class="row" style="margin-top:18px; background-color: beige;"> <h2 style="font-family: inherit;margin-left: 416px;font-size: 33px;">Te dhenat personale te: &nbsp; <b>@ViewBag.Emri</b> </h2> </div>
+<hr />
+<div style="width: 76%; margin-left: 164px; font-size: 21px; margin-top: 24px; margin-bottom: 76px;">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Emri:</th>
+                <th scope="col">Email:</th>
+                <th scope="col">Numer Telefoni:</th>
+                <th scope="col">Password:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-active">
+                <td>@ViewBag.Emri</td>
+                <td>@ViewBag.Email</td>
+                <td>@ViewBag.NumriTel</td>
+                <td><a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-dark"> Ndrysho Password</a></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+@if(Request.IsAuthenticated)
+{
+
+<div class="row" style="margin-top:18px; background-color: beige;"> <h2 style="font-family: inherit;margin-left: 482px;font-size: 33px;">Marreveshjet me <b>WeDevelop</b></h2> </div>
+<hr />
+<div class="row" style="margin-top:46px;">
+    @foreach (var item in Model)
+    {<div class="col-md-4">
+         <div class="card" style=" width:35rem;margin-left: 12px;margin-bottom: 24px; ">
+             <div class="inner">
+                 <a href="@Url.Action("DetajeSherbimesh", "Home", new { id = item.Id_Sherbimi })">
+                     <img src="~/Content/Sherbimet/@item.Sherbimet.Imazh" width="200" height="200" class="card-img-top">
+                 </a>
+             </div>
+             <hr /><hr />
+             @{
+                 var data = item.DataEFillimit.ToString();
+                 var nr = data.IndexOf(" ");
+                 data = data.Substring(0, nr);
+             }
+             @if (item.Pranuar == true)
+             {
+
+
+                   <div class="card-body">
+                       <h5 class="card-title" style="color:black;font-size:21px;">@item.Sherbimet.Emri</h5>
+                       <p class="card-text" style="color:black;font-size:18px;">@Convert.ToInt32(item.Sherbimet.Cmimi) All <b>||</b> @item.Sherbimet.Ditet dite&nbsp;<b>||</b> &nbsp; Dt.Fillimi:@data </p>
+                       @if (item.Progresi == "100")
+                       {<p class="btn btn-primary"> @Html.ActionLink("Shkarko faturen", "Fatura",   new { id = item.Sherbimet.Id }, new { @style= "color: white;font-size: 15px; "}) <h4 class="btn btn-success" style="font-size: 18px;margin-left: 81px;">Perfunduar</h4></p>
+
+                   }
+                       else
+                       {
+
+
+                       <p class="btn btn-primary" style="font-size: 20px;"> @item.Progresi% progres <h4 class="btn btn-success" style="font-size: 20px;margin-left: 95px;">Pranuar</h4></p>
+                   }
+                   </div>
+
+             }
+             else
+             {
+                 <div class="card-body">
+                     <h5 class="card-title" style="color:black;font-size:21px;">@item.Sherbimet.Emri</h5>
+                     <p class="card-text" style="color:black;font-size:21px;">@Convert.ToInt32(item.Sherbimet.Cmimi) All <b>||</b> @item.Sherbimet.Ditet dite</p>
+
+                     <p class="btn btn-danger" style="font-size: 20px;margin-left: 215px;">Papranuar</p>
+                 </div>
+             }
+           
+             <p></p>
+             <p></p>
+         </div>
+        </div>
+                 }
+</div>
+               
+<center>
+    <div class="paging" style="margin-top:25px;">
+        @Html.ActionLink("<<<", "Dashboard", new { nrFaqes = ViewBag.FaqjaAktuale - 1 }, htmlAttributes: new { style = "font-size: 20px;text - align: center;width: 49px;font - weight: 800;color: #00334d;" })
+        <label style="font-size: 15px; margin-left:10px; margin-right:10px;">@ViewBag.FaqjaAktuale</label>
+        @Html.ActionLink(">>>", "Dashboard", new { nrFaqes = ViewBag.FaqjaAktuale + 1 }, htmlAttributes: new { style = "font-size: 20px;text - align: center;width: 49px;font - weight: 800;color: #00334d;" })
+    </div>
+</center>
+                 }
+<style>
+    .inner {
+        overflow: hidden;
+    }
+
+        .inner img {
+            transition: all 1.5s ease;
+        }
+
+        .inner:hover img {
+            transform: scale(1.5);
+        }
+</style>

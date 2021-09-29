@@ -1,0 +1,113 @@
+﻿
+
+@{
+    ViewBag.Title = "Porosite";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<WeDevelop.Models.Karta>
+
+
+
+@if (Model == null)
+{
+    <div class="row" style="margin-left: 100px;font-size: 27px;font-weight: 800;margin-bottom: 30px;margin-top: 50px;">
+        Ju akoma nuk keni nje Sherbim te preferuar!
+    </div>
+}
+
+else
+{
+    <div class="row" style="margin-left: 100px;font-size: 27px;font-weight: 800;margin-bottom: 30px;margin-top: 50px;">
+        Sherbimet po na presin ti perfundojme!Zgjidh te preferuarin dhe le te fillojme punen!
+    </div>
+    foreach (var cart in Model)
+    {<div class="col-md-3">
+            <div class="card" style=" width: 28rem;margin-top: 50px; margin-left: 12px; margin-bottom: 12px; ">
+                <div class="inner">
+                    <a href="@Url.Action("DetajeSherbimesh", "Home", new { id = cart.sherbimId})">
+                        <img src="~/Content/Sherbimet/@cart.Sherbime.Imazh" width="250" height="250" class="card-img-top">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="color:black;font-size:21px;">@Convert.ToInt32(cart.Sherbime.Cmimi) All&nbsp;&nbsp;•@cart.Sherbime.Ditet dite </p>
+                    <h5 class="card-title" style="color:black;font-size:21px;">@Html.DisplayFor(modelItem => cart.Sherbime.Emri)</h5>
+                    <hr />
+                    @Html.ActionLink("Nuk e preferoj", "FshiKart", new { id = cart.sherbimId }, new { @class = "btn btn-danger", @style = "width: 228px; height: 32px; font-size: 16px; " })
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
+}
+
+@*<div id="footer">
+
+        </div>
+        <button type="button" id="btnPrint" class="btn btn-primary"> Printo </button>
+        <button type="button" id="btnPrint" class="btn btn-primary"> Shkarko </button>
+        @Html.ActionLink("Shiko Sherbime te tjera", "Sherbime", "Home", null, new { @class = "btn btn-success" })
+    </div>*@
+
+
+<style type="text/css">
+    .inner {
+        overflow: hidden;
+    }
+
+        .inner img {
+            transition: all 1.5s ease;
+        }
+
+        .inner:hover img {
+            transform: scale(1.5);
+        }
+
+    .label {
+        -size: 10pt;
+        -weight: bold;
+        -family: Arial;
+    }
+
+    .contents {
+        border: 1px dotted black;
+        padding: 5px;
+        width: 300px;
+    }
+
+    .name {
+        color: #18B5F0;
+    }
+
+    .left {
+        float: left;
+        width: 50px;
+        height: 50px;
+    }
+
+    .right {
+        margin-left: 60px;
+        line-height: 50px;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    #footer {
+        position: fixed;
+        bottom: 0px;
+        height: 3px;
+        background-color: #666;
+        color: #eee;
+        width: 100%
+    }
+</style>
+
+@section Scripts{
+
+    <script src="~/Scripts/karta/printo.js"></script>
+}

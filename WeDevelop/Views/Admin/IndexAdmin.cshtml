@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "IndexAdmin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using WeDevelop.ViewModels
+@model AdminViewModel
+<div class="pre-loader">
+    <div class="pre-loader-box">
+        <div class="loader-logo">
+            <h3><img src="~/Content/images/baku-removebg-preview.png" width="200" height="200" /> <b style="color: bisque;margin-left: -100px;">WeDevelop</b> </h3>
+        </div>
+        <div class='loader-progress' id="progress_div">
+            <div class='bar' id='bar1'></div>
+        </div>
+        <div class='percent' id='percent1'>0%</div>
+        <div class="loading-text">
+            Loading...
+        </div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="pd-ltr-20">
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+             
+                    <img src="~/Content/images/baku-removebg-preview.png" />
+                </div>
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        <div class="weight-600 font-30 text-blue">We Develop</div>
+                    </h4>
+                    <p class="font-18 max-width-600">
+                        WeDevelop është tregu më i madh në botë për freelancing dhe kërkimin e burimeve nga numri i përdoruesve dhe projekteve. Punëdhënësit mund të punësojnë profesionistë të pavarur për të
+                        bërë punë në fusha të tilla si zhvillimi i softuerit, shkrimi, futja e të dhënave dhe krijimi i të drejtave përmes inxhinierisë, shkencave, shitjeve dhe marketingut, kontabilitetit dhe shërbimeve ligjore.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 mb-30">
+                <div class="card-box height-100-p widget-style1">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="progress-data">
+                            <div>
+                                <img src="~/Content/images/perdorues.jpg" />
+                            </div>
+                        </div>
+                        <div class="widget-data">
+                            <div class="h4 mb-0">@Model.NrPerdoruesve</div>
+                            <div class="weight-600 font-14"> Perdorues</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 mb-30">
+                <div class="card-box height-100-p widget-style1">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="progress-data">
+                            <div>
+                                <img src="~/Content/images/deal.png" />
+                            </div>
+                        </div>
+                        <div class="widget-data">
+                            <div class="h4 mb-0">@Model.NrMarreveshjeve</div>
+                            <div class="weight-600 font-14">Marreveshje</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 mb-30">
+                <div class="card-box height-100-p widget-style1">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="progress-data">
+                            <div>
+                                <img src="~/Content/images/service.png" />
+                            </div>
+                        </div>
+                        <div class="widget-data">
+                            <div class="h4 mb-0">@Model.NrSherbimeve</div>
+                            <div class="weight-600 font-14">Sherbime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 mb-30">
+                <div class="card-box height-100-p widget-style1">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="progress-data">
+                            <div>
+<img src="~/Content/images/kerkes.png" /></div>
+                        </div>
+                        <div class="widget-data">
+                            <div class="h4 mb-0">@Model.NrKerkesave</div>
+                            <div class="weight-600 font-14">Kerkesa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-xl-8 mb-30">
+                <div class="card-box height-100-p pd-20">
+                    <h2 class="h4 mb-20">Aktiviteti</h2>
+                    <div id="chart5"></div>
+                </div>
+            </div>
+            <div class="col-xl-4 mb-30">
+                <div class="card-box height-100-p pd-20">
+                    <h2 class="h4 mb-20">Fokusi</h2>
+                    <div id="chart6"></div>
+                </div>
+            </div>
+        </div>*@
+
+
+        <div class="card-box mb-30">
+            <h2 class="h4 pd-20">Sherbimet me te kerkuara</h2>
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus datatable-nosort">Sherbimi</th>
+                        <th>Emri</th>
+                        <th>Cmimi</th>
+                        <th>Nr marreveshjeve</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Sherbimet)
+                    {
+                        <tr>
+                            <td><img src="~/Content/Sherbimet/@(item.Sherbimi.Imazh)" width="100" height="100" /></td>
+                            <td style="width:200px !important;">@item.Sherbimi.Emri</td>
+                            <td style="width:200px !important;">@Convert.ToInt32(item.Sherbimi.Cmimi) All</td>
+                            <td style="width:200px !important;">@item.Count</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
